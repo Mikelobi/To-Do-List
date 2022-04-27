@@ -39,11 +39,6 @@ const populateLists = () => {
       </div>
       <img src="${kebabMenu}" alt="Kebab-menu" class="kebab-icon">
     `;
-    // let radioBox = document.createElement('input');
-    // radioBox.type = 'checkbox';
-    // listItem.appendChild(radioBox);
-    // listItem.textContent = list.description;
-    // ;
     listItems.appendChild(listItem);
   });
 };
