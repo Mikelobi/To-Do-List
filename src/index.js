@@ -1,48 +1,68 @@
 import './style.css';
-import kebabMenu from './kebab-menu.svg';
-import enterIcon from './enter-icon.svg';
-import refreshIcon from './Refresh_icon.svg';
+import ViewMore from './assets/view-more.png';
+import addNewTask from './add-task.js';
+import editTask from './edit-task.js';
+import { setStorage, getStorage } from './store-list.js';
+import Delete from './remove-task.js';
 
-const toDoLists = [
-  {
-    description: 'Go to Gym',
-    completed: false,
-    index: 1,
-  },
-  {
-    description: 'Wash my Car',
-    completed: false,
-    index: 2,
-  },
-  {
-    description: 'Go to Cinema',
-    completed: false,
-    index: 3,
-  },
-];
+const addTask = document.getElementById('add-new-task');
+const currentTasks = document.querySelector('.current-tasks');
 
-const listItems = document.querySelector('.list-items');
+const tasks = getStorage();
 
-const refreshImg = document.querySelector('.refresh-icon');
-refreshImg.src = refreshIcon;
-
-const enterImg = document.querySelector('.enter-icon');
-enterImg.src = enterIcon;
-
-const populateLists = () => {
-  toDoLists.forEach((list) => {
-    const listItem = document.createElement('li');
-    listItem.className = 'list-item';
-    listItem.innerHTML = ` <div>
-        <input type="checkbox"></input>
-        <p>${list.description}</p>
-      </div>
-      <img src="${kebabMenu}" alt="Kebab-menu" class="kebab-icon">
-    `;
-    listItems.appendChild(listItem);
-  });
+// Delete an item from local storage
+const removeIndex = (index) => {
+  setStorage(Delete.deleteOne(getStorage(), index));
+  populateTasks(getStorage()); // eslint-disable-line
 };
 
+const populateTasks = (arr) => {
+  currentTasks.innerHTML = '';
+  for (let i = 0; i <= arr.length; i += 1) {
+    // Add an item to local storage
+    const newDiv = document.createElement('div');
+    newDiv.className = 'to-do-item';
+    const tick = document.createElement('input');
+    const description = document.createElement('input');
+    description.className = 'task-description';
+    const menuImg = document.createElement('img');
+    menuImg.src = `${ViewMore}`;
+    tick.setAttribute('type', 'checkbox');
+    tick.id = `item${i}`;
+    newDiv.append(tick);
+    description.value = `${arr[i].description}`;
+    newDiv.append(description);
+    newDiv.append(menuImg);
+    currentTasks.appendChild(newDiv);
+
+    // Double click the input area to display the delete icon
+    description.addEventListener('dblclick', () => {
+      newDiv.classList.add('edit-mode');
+      newDiv.innerHTML = `<input type="checkbox" id="${i}"></input><input id = "update${i}" class="update" type="text" value = "${arr[i].description}"></input><i id="delete${i}" class="fas fa-trash-alt"></i>`;
+      document.getElementById(`update${i}`).focus();
+      document.getElementById(`delete${i}`).addEventListener('click', () => {
+        removeIndex(i);
+      });
+    });
+    document.body.addEventListener('click', (e) => {
+      // Update task on clicking body
+      if (!newDiv.contains(e.target) && document.getElementById(`update${i}`)) {
+        newDiv.classList.remove('edit-mode');
+        const arr = getStorage();
+        setStorage(editTask(arr, i));
+        populateTasks(editTask(arr, i));
+      }
+    });
+  }
+  setStorage(arr);
+};
+
+// Add new task
+addTask.addEventListener('click', () => {
+  populateTasks(addNewTask(getStorage()));
+});
+
+// Display tasks
 document.addEventListener('DOMContentLoaded', () => {
-  populateLists();
+  populateTasks(tasks);
 });
