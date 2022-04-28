@@ -1,88 +1,99 @@
-body {
+html {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  -webkit-box-sizing: inherit;
+  -moz-box-sizing: inherit;
+  box-sizing: inherit;
   padding: 0;
   margin: 0;
-  box-sizing: border-box;
-  background: #d3d3d3;
+  font-size: 14px;
 }
 
-main {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  padding: 2%;
+/* main container styles */
+.main-container {
+  margin: 6em auto auto auto;
+  width: 50%;
 }
 
+/* To do list div styles */
 .title {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  background: #fff;
 }
 
-.title h3 {
-  padding: 2%;
-  margin: 0;
+.title h4 {
+  padding: 1.5em 0 0 1.5em;
 }
 
-form {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  background: #fff;
-}
-
-form input {
-  padding: 2%;
-  border: none;
-  font-size: 16px;
-  font-style: italic;
-}
-
-.list-items {
-  background: #d3d3d3;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  padding: 0;
-  margin: 0;
-}
-
-.list-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  list-style: none;
-  background: #fff;
-  padding: 2%;
-}
-
-.list-item div {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.list-item div input {
-  width: 20px;
-  height: 20px;
-}
-
-.clear {
-  padding: 2%;
-  background: #fff;
-  border: none;
-  font-size: 16px;
-}
-
-.kebab-icon,
-.enter-icon,
 .refresh-icon {
-  width: 20px;
-  height: 20px;
+  padding: 1.5em 2em 0 0;
 }
 
-.enter-icon,
-.refresh-icon {
-  padding: 2%;
+.list-div {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.list-div:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* List item styles */
+
+.to-do-item {
+  border-bottom: 1px solid grey;
+  padding: 10px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.add-task {
+  border-bottom: 1px solid grey;
+  padding: 1em 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.new-list-item {
+  border: 0;
+  background: none;
+  width: 80%;
+}
+
+.new-list-item:focus {
+  outline: none;
+}
+
+.clear-content {
+  text-align: center;
+  padding: 1.5em;
+  font-size: 1.1rem;
+  background-color: #f6f6f6;
+  text-decoration: underline;
+}
+
+.task-description {
+  border: 0;
+  background: none;
+  outline: none;
+}
+
+.edit-mode {
+  background: yellow;
+}
+
+.update {
+  outline: none;
+  border: none;
+  background: yellow;
 }
