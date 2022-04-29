@@ -12,11 +12,13 @@ const clearCompleted = document.getElementById('completed');
 
 const tasks = getStorage();
 
-// Delete an item from local storage
+// Delete a task from local storage
 const removeIndex = (index) => {
   setStorage(Delete.deleteOne(getStorage(), index));
   populateTasks(getStorage()); // eslint-disable-line
 };
+
+// Delete all completed tasks from local storage
 
 clearCompleted.addEventListener('click', () => {
   Delete.deleteAll(getStorage());
@@ -35,13 +37,14 @@ const populateTasks = (arr) => {
     const menuImg = document.createElement('img');
     menuImg.src = `${ViewMore}`;
     tick.setAttribute('type', 'checkbox');
-    tick.id = `item${i}`;
+    tick.id = i;
+    newDiv.id = `item${i}`;
     newDiv.append(tick);
     description.value = `${arr[i].description}`;
     newDiv.append(description);
     newDiv.append(menuImg);
     currentTasks.appendChild(newDiv);
-
+    // Check which checkboxes are clicked.
     if (arr[i].completed === 'true') {
       tick.checked = true;
       newDiv.style.textDecoration = 'line-through';
@@ -56,11 +59,12 @@ const populateTasks = (arr) => {
         removeIndex(i);
       });
     });
+    // Update task on clicking body
     document.body.addEventListener('click', (e) => {
-      // Update task on clicking body
       if (!newDiv.contains(e.target) && document.getElementById(`update${i}`)) {
         newDiv.classList.remove('edit-mode');
         const arr = getStorage();
+        completed(editTask(arr, i));
         setStorage(editTask(arr, i));
         populateTasks(editTask(arr, i));
       }
@@ -74,6 +78,7 @@ addTask.addEventListener('click', () => {
   populateTasks(addNewTask(getStorage()));
 });
 
+// call completed function to update task status
 document.body.addEventListener('change', () => {
   completed(getStorage());
 });
