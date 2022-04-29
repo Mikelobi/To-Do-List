@@ -4,9 +4,11 @@ import addNewTask from './add-task.js';
 import editTask from './edit-task.js';
 import { setStorage, getStorage } from './store-list.js';
 import Delete from './remove-task.js';
+import completed from './completed-tasks.js';
 
 const addTask = document.getElementById('add-new-task');
 const currentTasks = document.querySelector('.current-tasks');
+const clearCompleted = document.getElementById('completed');
 
 const tasks = getStorage();
 
@@ -15,6 +17,11 @@ const removeIndex = (index) => {
   setStorage(Delete.deleteOne(getStorage(), index));
   populateTasks(getStorage()); // eslint-disable-line
 };
+
+clearCompleted.addEventListener('click', () => {
+  Delete.deleteAll(getStorage());
+  populateTasks(getStorage()); // eslint-disable-line
+});
 
 const populateTasks = (arr) => {
   currentTasks.innerHTML = '';
@@ -34,6 +41,11 @@ const populateTasks = (arr) => {
     newDiv.append(description);
     newDiv.append(menuImg);
     currentTasks.appendChild(newDiv);
+
+    if (arr[i].completed === 'true') {
+      tick.checked = true;
+      newDiv.style.textDecoration = 'line-through';
+    }
 
     // Double click the input area to display the delete icon
     description.addEventListener('dblclick', () => {
@@ -60,6 +72,10 @@ const populateTasks = (arr) => {
 // Add new task
 addTask.addEventListener('click', () => {
   populateTasks(addNewTask(getStorage()));
+});
+
+document.body.addEventListener('change', () => {
+  completed(getStorage());
 });
 
 // Display tasks
