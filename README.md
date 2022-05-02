@@ -2,7 +2,11 @@
 
 # To-Do-List
 
-A simple HTML list of To Do built using webpack and served by a webpack dev server
+A simple HTML list of To Do built using webpack and served by a webpack dev server.
+
+# Live Link
+
+![See Demo](https://mikelobi.github.io/To-Do-List/)
 
 ## Built With
 
