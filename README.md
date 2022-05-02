@@ -6,7 +6,7 @@ A simple HTML list of To Do built using webpack and served by a webpack dev serv
 
 # Live Link
 
-![See Demo](https://mikelobi.github.io/To-Do-List/)
+[See Demo](https://mikelobi.github.io/To-Do-List/)
 
 ## Built With
 
