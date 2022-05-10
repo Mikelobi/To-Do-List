@@ -4,9 +4,11 @@
   "description": "Using webpack to bundle JavaScript.",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
+    "build": "webpack",
+    "watch": "webpack --watch",
     "start": "webpack serve --open",
-    "build": "webpack"
+    "deploy": "gh-pages -d dist"
   },
   "repository": {
     "type": "git",
@@ -40,6 +42,7 @@
     "webpack-dev-server": "^4.7.4"
   },
   "dependencies": {
+    "gh-pages": "^3.2.3",
     "lodash": "^4.17.21"
   }
 }
